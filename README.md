@@ -28,3 +28,28 @@ The plain PHP example includes a `docker-compose.yml` file for easy deployment.
 ### Notes
 -   The application uses a local SQLite database (`database.sqlite`) stored in the `examples/plain-php` directory.
 -   Configuration (Client ID, IDP URL) is defined in `src/oauth.php`.
+
+## Running the Slim + PHPLeague Example
+
+This example uses Slim Framework 4 and `league/oauth2-client`.
+
+1.  Navigate to the directory:
+    ```bash
+    cd examples/phpleague-oauthclient
+    ```
+
+2.  Start the container:
+    ```bash
+    docker-compose up -d
+    ```
+
+3.  Install dependencies (required first time):
+    ```bash
+    docker-compose exec php composer install
+    ```
+
+4.  Access the application at [http://localhost:37181](http://localhost:37181).
+
+### Notes
+-   Uses port **37181** and Client ID `test_phpleague_oauth_client`.
+-   Authentication logic is in `src/AuthController.php`.
