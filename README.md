@@ -98,3 +98,28 @@ This example uses React and Vite. It runs locally via the Vite dev server.
 ### Notes
 -   Uses port **37183** and Client ID `test_react_spa`.
 -   Vite is configured to proxy `/api/oauth` and `/api/resources` to `http://localhost:37080`.
+
+## Running the Svelte SPA Example
+
+This example uses Svelte and Vite. It runs locally via the Vite dev server.
+
+1.  Navigate to the directory:
+    ```bash
+    cd examples/svelte-spa
+    ```
+
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+
+3.  Start the dev server:
+    ```bash
+    npm run dev
+    ```
+
+4.  Access the application at [http://localhost:37182](http://localhost:37182).
+
+### Notes
+-   Uses port **37182** and Client ID `test_svelte_spa`.
+-   Vite is configured to proxy `/api/oauth` and `/api/resources` to `http://localhost:37080`.
