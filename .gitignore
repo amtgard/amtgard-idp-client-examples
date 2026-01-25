@@ -2,3 +2,4 @@ database.sqlite
 .idea/
 .DS_Store
 vendor/
+node_modules/

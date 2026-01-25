@@ -73,3 +73,28 @@ This example is a Single Page Application using jQuery and standard browser APIs
 ### Notes
 -   Uses port **37184** and Client ID `test_plain_jquery`.
 -   Nginx is configured to proxy `/api/oauth` and `/api/resources` to the IDP to handle potential CORS issues during development.
+
+## Running the React SPA Example
+
+This example uses React and Vite. It runs locally via the Vite dev server.
+
+1.  Navigate to the directory:
+    ```bash
+    cd examples/react-spa
+    ```
+
+2.  Install dependencies:
+    ```bash
+    npm install
+    ```
+
+3.  Start the dev server:
+    ```bash
+    npm run dev
+    ```
+
+4.  Access the application at [http://localhost:37183](http://localhost:37183).
+
+### Notes
+-   Uses port **37183** and Client ID `test_react_spa`.
+-   Vite is configured to proxy `/api/oauth` and `/api/resources` to `http://localhost:37080`.
