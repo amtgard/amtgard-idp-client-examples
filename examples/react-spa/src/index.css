@@ -1,0 +1,58 @@
+body {
+  font-family: sans-serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #f0f0f0;
+  margin: 0;
+}
+
+.container {
+  background: white;
+  padding: 2rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 350px;
+}
+
+.status-line {
+  margin-bottom: 1rem;
+  font-size: 1.1rem;
+}
+
+.status-value {
+  font-weight: bold;
+}
+
+.controls {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1rem;
+  margin-top: 2rem;
+}
+
+button {
+  padding: 0.5rem;
+  cursor: pointer;
+  width: 100%;
+}
+
+.yes { color: green; }
+.no { color: red; }
+
+.validation-result {
+  margin-bottom: 1rem;
+  padding: 1rem;
+  border-radius: 4px;
+}
+
+.validation-success {
+  background-color: #e6ffe6;
+  border: 1px solid #ccffcc;
+}
+
+.validation-error {
+  background-color: #ffe6e6;
+  border: 1px solid #ffcccc;
+}
