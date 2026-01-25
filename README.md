@@ -53,3 +53,23 @@ This example uses Slim Framework 4 and `league/oauth2-client`.
 ### Notes
 -   Uses port **37181** and Client ID `test_phpleague_oauth_client`.
 -   Authentication logic is in `src/AuthController.php`.
+
+## Running the Plain jQuery SPA Example
+
+This example is a Single Page Application using jQuery and standard browser APIs. It is hosted as static files via Nginx.
+
+1.  Navigate to the directory:
+    ```bash
+    cd examples/plain-jquery
+    ```
+
+2.  Start the container:
+    ```bash
+    docker-compose up -d
+    ```
+
+3.  Access the application at [http://localhost:37184](http://localhost:37184).
+
+### Notes
+-   Uses port **37184** and Client ID `test_plain_jquery`.
+-   Nginx is configured to proxy `/api/oauth` and `/api/resources` to the IDP to handle potential CORS issues during development.
