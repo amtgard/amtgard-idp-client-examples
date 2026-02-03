@@ -3,7 +3,7 @@
 
 // Configuration
 define('CLIENT_ID', 'test_amtgard_idp_client');
-define('IDP_BASE_URL', 'http://host.docker.internal:37080'); // Use host.docker.internal to reach host from container
+define('IDP_BASE_URL', 'https://idp.amtgard.com'); // Use host.docker.internal to reach host from container
 define('REDIRECT_URI', 'http://localhost:37180');
 
 // PKCE Helpers
@@ -43,10 +43,7 @@ function getLoginUrl()
         'approval_prompt' => 'auto'
     ];
 
-    // Important: The browser needs to go to localhost, not host.docker.internal
-    // But for the user, localhost:37080 is correct if the IDP is running on the host.
-    // If IDP is reachable by the user's browser at localhost:37080, we use that.
-    $authUrl = 'http://localhost:37080/oauth/authorize?' . http_build_query($params);
+    $authUrl = 'https://idp.amtgard.com/oauth/authorize?' . http_build_query($params);
 
     return $authUrl;
 }

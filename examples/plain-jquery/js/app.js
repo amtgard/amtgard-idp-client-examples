@@ -2,7 +2,7 @@ $(document).ready(function () {
     const config = {
         clientId: 'test_plain_jquery',
         redirectUri: 'http://localhost:37184',
-        authorizationEndpoint: 'http://localhost:37080/oauth/authorize',
+        authorizationEndpoint: 'https://idp.amtgard.com/oauth/authorize',
         // Use proxy for token endpoint
         tokenEndpoint: '/api/oauth/token',
         scopes: 'profile email'

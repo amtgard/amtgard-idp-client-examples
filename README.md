@@ -97,7 +97,7 @@ This example uses React and Vite. It runs locally via the Vite dev server.
 
 ### Notes
 -   Uses port **37183** and Client ID `test_react_spa`.
--   Vite is configured to proxy `/api/oauth` and `/api/resources` to `http://localhost:37080`.
+-   Vite is configured to proxy `/api/oauth` and `/api/resources` to `https://idp.amtgard.com`.
 
 ## Running the Svelte SPA Example
 
@@ -122,4 +122,4 @@ This example uses Svelte and Vite. It runs locally via the Vite dev server.
 
 ### Notes
 -   Uses port **37182** and Client ID `test_svelte_spa`.
--   Vite is configured to proxy `/api/oauth` and `/api/resources` to `http://localhost:37080`.
+-   Vite is configured to proxy `/api/oauth` and `/api/resources` to `https://idp.amtgard.com`.

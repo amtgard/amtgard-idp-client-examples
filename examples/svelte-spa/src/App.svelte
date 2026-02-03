@@ -5,7 +5,7 @@
   const config = {
       clientId: 'test_svelte_spa',
       redirectUri: 'http://localhost:37182',
-      authorizationEndpoint: 'http://localhost:37080/oauth/authorize',
+      authorizationEndpoint: 'https://idp.amtgard.com/oauth/authorize',
       tokenEndpoint: '/api/oauth/token', // Proxy
       scopes: 'profile email'
   };

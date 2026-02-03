@@ -8,7 +8,7 @@ export default defineConfig({
         port: 37182,
         proxy: {
             '/api': {
-                target: 'http://localhost:37080',
+                target: 'https://idp.amtgard.com',
                 changeOrigin: true,
                 rewrite: (path) => path.replace(/^\/api/, '')
             }
