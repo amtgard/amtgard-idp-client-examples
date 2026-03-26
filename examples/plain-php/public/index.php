@@ -77,9 +77,9 @@ if (isset($_POST['action']) && $_POST['action'] === 'refresh') {
     exit;
 }
 
-// Handle Validate Action
-$validationResult = null;
-if (isset($_POST['action']) && $_POST['action'] === 'validate') {
+// Handle User Info Action
+$userInfoResult = null;
+if (isset($_POST['action']) && $_POST['action'] === 'user_info') {
     if (isset($_SESSION['user_id'])) {
         $user = getUser($db, $_SESSION['user_id']);
         if ($user) {
@@ -88,15 +88,47 @@ if (isset($_POST['action']) && $_POST['action'] === 'validate') {
                 // Token expired or about to expire, try to refresh
                 $refreshed = refreshAccessToken($db, $_SESSION['user_id']);
                 if (!$refreshed) {
-                    $validationResult = ['success' => false, 'message' => 'Token expired and refresh failed (revoked or expired).'];
+                    $userInfoResult = ['success' => false, 'message' => 'Token expired and refresh failed (revoked or expired).'];
                 } else {
                     // Reload user to get new token
                     $user = getUser($db, $_SESSION['user_id']);
                 }
             }
 
-            if (!$validationResult) { // If we haven't failed yet
+            if (!$userInfoResult) { // If we haven't failed yet
                 $res = fetchUserProfile($user['access_token']);
+                if ($res['success']) {
+                    $userInfoResult = ['success' => true, 'data' => $res['data']];
+                } else {
+                    $userInfoResult = ['success' => false, 'message' => 'User Info failed: ' . $res['error']];
+                }
+            }
+        } else {
+            $userInfoResult = ['success' => false, 'message' => 'User not found in DB.'];
+        }
+    } else {
+        $userInfoResult = ['success' => false, 'message' => 'Not logged in.'];
+    }
+}
+
+// Handle Validate Action
+$validationResult = null;
+if (isset($_POST['action']) && $_POST['action'] === 'validate') {
+    if (isset($_SESSION['user_id'])) {
+        $user = getUser($db, $_SESSION['user_id']);
+        if ($user) {
+            // Check expiry (give it a 10 second buffer)
+            if (time() >= ($user['access_expires_at'] - 10)) {
+                $refreshed = refreshAccessToken($db, $_SESSION['user_id']);
+                if (!$refreshed) {
+                    $validationResult = ['success' => false, 'message' => 'Token expired and refresh failed.'];
+                } else {
+                    $user = getUser($db, $_SESSION['user_id']);
+                }
+            }
+
+            if (!$validationResult) {
+                $res = validateToken($user['access_token']);
                 if ($res['success']) {
                     $validationResult = ['success' => true, 'data' => $res['data']];
                 } else {
@@ -104,7 +136,7 @@ if (isset($_POST['action']) && $_POST['action'] === 'validate') {
                 }
             }
         } else {
-            $validationResult = ['success' => false, 'message' => 'User not found in DB.'];
+            $validationResult = ['success' => false, 'message' => 'User not found.'];
         }
     } else {
         $validationResult = ['success' => false, 'message' => 'Not logged in.'];
@@ -195,6 +227,19 @@ if ($isLoggedIn) {
                 class="status-value <?php echo $isLoggedIn ? 'yes' : 'no'; ?>"><?php echo $isLoggedIn ? 'Yes' : 'No'; ?></span>
         </div>
 
+        <?php if (isset($userInfoResult)): ?>
+            <div
+                style="margin-bottom: 1rem; padding: 1rem; border-radius: 4px; border: 1px solid <?php echo $userInfoResult['success'] ? '#ccffcc' : '#ffcccc'; ?>; background-color: <?php echo $userInfoResult['success'] ? '#e6ffe6' : '#ffe6e6'; ?>;">
+                <strong>User Info Result:</strong> <?php echo $userInfoResult['success'] ? 'Success' : 'Failed'; ?><br>
+                <?php if ($userInfoResult['success']): ?>
+                    <pre
+                        style="font-size: 0.8rem; overflow-x: auto;"><?php echo htmlspecialchars(json_encode($userInfoResult['data'], JSON_PRETTY_PRINT)); ?></pre>
+                <?php else: ?>
+                    <span style="color: red;"><?php echo htmlspecialchars($userInfoResult['message']); ?></span>
+                <?php endif; ?>
+            </div>
+        <?php endif; ?>
+
         <?php if (isset($validationResult)): ?>
             <div
                 style="margin-bottom: 1rem; padding: 1rem; border-radius: 4px; border: 1px solid <?php echo $validationResult['success'] ? '#ccffcc' : '#ffcccc'; ?>; background-color: <?php echo $validationResult['success'] ? '#e6ffe6' : '#ffe6e6'; ?>;">
@@ -228,8 +273,10 @@ if ($isLoggedIn) {
                 <button type="submit" name="action" value="login">Login</button>
             <?php else: ?>
                 <?php if ($user && $user['refresh_token']): ?>
+                    <button type="submit" name="action" value="user_info"
+                        style="background-color: #e6f7ff; color: #005580; border: 1px solid #005580;">User Info</button>
                     <button type="submit" name="action" value="validate"
-                        style="background-color: #e6f7ff; color: #005580; border: 1px solid #005580;">Validate</button>
+                        style="background-color: #e6ffe6; color: #006600; border: 1px solid #006600;">Validate</button>
                     <button type="submit" name="action" value="refresh"
                         style="background-color: #e0f7fa; color: #006064; border: 1px solid #006064;">Refresh</button>
                 <?php endif; ?>

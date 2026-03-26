@@ -3,7 +3,8 @@
 
 // Configuration
 define('CLIENT_ID', 'test_amtgard_idp_client');
-define('IDP_BASE_URL', 'https://idp.amtgard.com'); // Use host.docker.internal to reach host from container
+define('CLIENT_SECRET', 'secret');
+define('IDP_BASE_URL', 'http://host.docker.internal:37080'); // Use host.docker.internal to reach host from container
 define('REDIRECT_URI', 'http://localhost:37180');
 
 // PKCE Helpers
@@ -68,6 +69,7 @@ function handleCallback($db, $params)
     $postData = [
         'grant_type' => 'authorization_code',
         'client_id' => CLIENT_ID,
+        'client_secret' => CLIENT_SECRET,
         'redirect_uri' => REDIRECT_URI,
         'code_verifier' => $verifier,
         'code' => $code,
@@ -125,6 +127,7 @@ function refreshAccessToken($db, $userId)
     $postData = [
         'grant_type' => 'refresh_token',
         'client_id' => CLIENT_ID,
+        'client_secret' => CLIENT_SECRET,
         'refresh_token' => $user['refresh_token'],
     ];
 
@@ -205,5 +208,29 @@ function fetchUserProfile($accessToken)
         return ['success' => false, 'error' => 'Failed to decode JSON response: ' . $response];
     }
 
+    return ['success' => true, 'data' => $data];
+}
+
+function validateToken($accessToken)
+{
+    $url = IDP_BASE_URL . '/resources/validate';
+
+    $ch = curl_init($url);
+    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+    curl_setopt($ch, CURLOPT_HTTPHEADER, [
+        'Authorization: Bearer ' . $accessToken,
+        'Accept: application/json'
+    ]);
+    curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+
+    $response = curl_exec($ch);
+    $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+    curl_close($ch);
+
+    if ($httpCode !== 200) {
+        return ['success' => false, 'error' => 'Validation failed (HTTP ' . $httpCode . '): ' . $response];
+    }
+
+    $data = json_decode($response, true);
     return ['success' => true, 'data' => $data];
 }

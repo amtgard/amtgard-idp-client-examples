@@ -5,9 +5,9 @@ This repository contains various examples of clients connecting to the Amtgard I
 ## Structure
 
 -   `examples/plain-php`: A basic PHP implementation using raw cURL requests and manual OAuth flow handling.
--   `examples/phpleague-oauthclient`: (Planned) implementation using `thephpleague/oauth2-client`.
--   `examples/svelte-spa`: (Planned) Single Page Application using Svelte.
--   `examples/react-spa`: (Planned) Single Page Application using React.
+-   `examples/phpleague-oauthclient`: Implementation using `thephpleague/oauth2-client` and Slim 4.
+-   `examples/svelte-spa`: Single Page Application using Svelte and Vite.
+-   `examples/react-spa`: Single Page Application using React and Vite.
 
 ## Modifying the Examples
 
