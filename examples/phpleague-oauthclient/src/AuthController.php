@@ -19,11 +19,11 @@ class AuthController
         // Configuration - Hardcoded for example, typically env vars
         $this->provider = new GenericProvider([
             'clientId' => 'test_phpleague_oauth_client',    // The client ID assigned to you by the provider
-            'clientSecret' => '',                           // The client password assigned to you by the provider
+            'clientSecret' => 'secret',                           // The client password assigned to you by the provider
             'redirectUri' => 'http://localhost:37181', // Root of localhost:37181
-            'urlAuthorize' => 'https://idp.amtgard.com/oauth/authorize',
-            'urlAccessToken' => 'https://idp.amtgard.com/oauth/token', // Internal Docker networking
-            'urlResourceOwnerDetails' => 'https://idp.amtgard.com/resources/userinfo',
+            'urlAuthorize' => 'http://localhost:37080/oauth/authorize',
+            'urlAccessToken' => 'http://host.docker.internal:37080/oauth/token', // Internal Docker networking
+            'urlResourceOwnerDetails' => 'http://host.docker.internal:37080/resources/userinfo',
             'verify' => false, // self-signed certs
             'scopes' => 'profile email'
         ]);

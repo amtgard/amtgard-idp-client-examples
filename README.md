@@ -9,6 +9,24 @@ This repository contains various examples of clients connecting to the Amtgard I
 -   `examples/svelte-spa`: (Planned) Single Page Application using Svelte.
 -   `examples/react-spa`: (Planned) Single Page Application using React.
 
+## Modifying the Examples
+
+To test against a local development instance of `amtgard-idp` or the production environment, you may need to change the IDP URL.
+
+-   **Local Development**: To use a local instance of [`amtgard-idp`](https://github.com/amtgard/amtgard-bastion-idp) running on port 37080, change the endpoint to `http://localhost:37080`.
+-   **Production**: To use the live Amtgard IDP, change the endpoint to `https://idp.amtgard.com`.
+
+Each example has a different way of configuring the endpoint:
+-   **plain-php**: Modify the `$idpUrl` variable in `examples/plain-php/src/oauth.php`.
+-   **phpleague-oauthclient**: Modify the `idp_url` setting in the application's configuration.
+-   **plain-jquery**: Update the `proxy_pass` directive in `examples/plain-jquery/nginx.conf`.
+-   **react-spa**: Update the `proxy` target in `examples/react-spa/vite.config.js`.
+-   **svelte-spa**: Update the `proxy` target in `examples/svelte-spa/vite.config.js`.
+
+## Registering a Test Client with Amtgard
+
+To get a `client_id` and `client_secret` for testing, you can request one by posting in the [Amtgard ORK Help](https://www.facebook.com/groups/189406377888489) group on Facebook.
+
 ## Running the Plain PHP Example
 
 The plain PHP example includes a `docker-compose.yml` file for easy deployment.
