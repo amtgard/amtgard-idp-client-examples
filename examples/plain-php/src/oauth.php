@@ -44,10 +44,7 @@ function getLoginUrl()
         'approval_prompt' => 'auto'
     ];
 
-    // Important: The browser needs to go to localhost, not host.docker.internal
-    // But for the user, localhost:37080 is correct if the IDP is running on the host.
-    // If IDP is reachable by the user's browser at localhost:37080, we use that.
-    $authUrl = 'http://localhost:37080/oauth/authorize?' . http_build_query($params);
+    $authUrl = 'https://idp.amtgard.com/oauth/authorize?' . http_build_query($params);
 
     return $authUrl;
 }

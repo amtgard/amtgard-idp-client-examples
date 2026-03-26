@@ -86,4 +86,10 @@ class Database
     {
         $this->pdo->exec("DROP TABLE IF EXISTS users");
     }
+
+    public function reinit()
+    {
+        $this->clearUsers();
+        $this->init();
+    }
 }
